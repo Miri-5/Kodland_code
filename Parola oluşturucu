@@ -1,0 +1,30 @@
+import random
+harfler = "abcdefghijklnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+rakamlar = "1234567890"
+isaretler = "+-/*!&$#?=@"
+
+uz = int(input("Parola uzunluğunu girin: "))
+
+while True:
+    parola = ""
+    
+    for i in range(uz):
+        if i % 3 == 0:
+            parola += random.choice(harfler)  
+        elif i % 3 == 1:
+            parola += random.choice(rakamlar)  
+        else:
+            parola += random.choice(isaretler)  #
+    
+    print("Oluşturulan Parola:", parola)
+    
+    cevap = input("Bu parolayı beğendiniz mi? (evet/hayır): ").strip().lower()
+    
+    if cevap == "evet":
+        print("Parolanız kabul edildi:", parola)
+        break  
+    elif cevap == "hayır":
+        print("Parola yeniden oluşturuluyor...")
+        
+    else:
+        print("Lütfen sadece 'evet' ya da 'hayır' yazın.")
