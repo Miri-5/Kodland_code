@@ -1,0 +1,10 @@
+import random
+py = "+-/*!&$#?=@abcdefghijklnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"
+
+uz = int(input("Parola uzunluğunu girin: "))
+parola = ""
+
+for i in range(uz):
+    parola += random.choice(py)
+
+print("Parola:", parola) 
