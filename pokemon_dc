@@ -1,0 +1,109 @@
+import os
+import random
+import discord
+from discord.ext import commands
+import chjb
+import requests
+intents = discord.Intents.default()
+intents.message_content = True
+
+bot = commands.Bot(command_prefix='$', intents=intents)
+
+@bot.event
+async def on_ready():
+    print(f'{bot.user} olarak giriş yaptık')
+
+@bot.command()
+async def hello(ctx):
+    await ctx.send(f'Merhaba! Ben {bot.user}, bir Discord sohbet botuyum!')
+
+@bot.command()
+async def heh(ctx, count_heh = 5):
+    await ctx.send("he" * count_heh)
+
+@bot.command()
+async def sifre(ctx, sayi = 5):
+    await ctx.send(chjb.gen_pass(sayi))
+
+@bot.command()
+async def vur(ctx, s1=3,s2=2,s3=1):
+    await ctx.send(s1+s2+s3)
+
+@bot.command()
+async def cix(ctx, y1,y2):
+    secilen = random.choice([y1, y2])
+
+@bot.command()
+async def topla(ctx, *args):
+    topla=0
+    for i in args:
+        topla += int(i)
+        await ctx.send(topla)
+
+@bot.command()
+async def mem(ctx):
+    with open('image/a.png', 'rb') as f:
+        picture = discord.File(f)
+    await ctx.send(file=picture)
+    
+@bot.command()
+async def image(ctx):
+    x = random.choice(os.listdir('image'))
+    with open(f'image/{x}', 'rb') as f:
+        y = discord.File(f)
+        await ctx.send(file=y)
+
+def get_duck_image_url():    
+    url = 'https://random-d.uk/api/random'
+    res = requests.get(url)
+    data = res.json()
+    return data['url']
+
+
+@bot.command('duck')
+async def duck(ctx):
+    '''duck komutunu çağırdığımızda, program ordek_resmi_urlsi_al fonksiyonunu çağırır.'''
+    image_url = get_duck_image_url()
+    await ctx.send(image_url)
+    #*****************************************
+def get_fox_image_url():    
+    url = 'https://randomfox.ca/floof/'
+    res = requests.get(url)
+    data = res.json()
+    return data['image']
+
+@bot.command('fox')
+async def fox(ctx):
+    '''fox komutunu çağırdığımızda, program ordek_resmi_urlsi_al fonksiyonunu çağırır.'''
+    image_url = get_fox_image_url()
+    await ctx.send(image_url)
+    #*****************************************
+def get_dog_image_url():    
+    url = 'https://random.dog/woof.json'
+    res = requests.get(url)
+    data = res.json()
+    return data['url']
+
+
+@bot.command('dog')
+async def dog(ctx):
+    '''dog komutunu çağırdığımızda, program ordek_resmi_urlsi_al fonksiyonunu çağırır.'''
+    image_url = get_dog_image_url()
+    await ctx.send(image_url)
+#************************************
+
+def get_pokemon_image_url():    
+    urls = [
+        'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/shiny/132.png',
+        'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/132.png',
+        'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/132.png',
+        'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/132.svg',
+        'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/132.png'
+    ]
+    return random.choice(urls) 
+
+@bot.command('pokemon')
+async def pokemon(ctx):
+    '''pokemon komutunu çağırdığımızda, random bir Ditto şəkli paylaşacaq.'''
+    image_url = get_pokemon_image_url()
+    await ctx.send(image_url)
