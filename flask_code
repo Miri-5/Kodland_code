@@ -1,68 +1,36 @@
-from flask import Flask
+from flask import Flask 
 import random
-import string
-
 app = Flask(__name__)
 
-# Ana sayfa
 @app.route("/")
 def hello_world():
-    return '''
-        <h1>Hello, World! Merhaba Dunya</h1>
-        <a href="/miri">Daha Fazla Bilgi</a><br>
-        <a href="/yazi_tura">Yazı Tura</a><br>
-        <a href="/sifre_olusturucu">Şifre Oluşturucu</a><br>
-        <a href="/resim">Rastgele Resim Göster</a>
-    '''
+    return '<h1>Hello, World!</h1> <h1>Merhaba Dunya</h1>' '<a href="/miri"> Daha Fazla Bilgi</a>'
 
-# "Miri" sayfası
 @app.route("/miri")
 def miri2():
-    return '<h1>Nasılsınız?</h1> <a href="/selam">Daha Fazla Bilgi</a>'
+    return '<h1>Nasılsınız?</h1> <a href="/selam"> Daha Fazla Bilgi</a>'
 
-# Selam sayfasında rastgele bir mesaj gösterme
-selam = [
-    "Teknolojik bağımlılıktan mustarip olan çoğu kişi...",
-    "Elon Musk, sosyal ağların içeriği görüntülemek için...",
-    "Sosyal ağların olumlu ve olumsuz yanları vardır..."
-]
+selam = ["Teknolojik bağımlılıktan mustarip olan çoğu kişi,kendilerini şebeke kapsama alanı dışında bulduklarında veya cihazlarını kullanamadıkları zaman yoğun stres yaşarlar.",
+        "Elon Musk, sosyal ağların içeriği görüntülemek için mümkün olduğunca fazla zaman harcamamız için bizi platformun içinde tutmak üzere tasarlandığını iddia ediyor.",
+        "Sosyal ağların olumlu ve olumsuz yanları vardır ve bu platformları kullanırken her ikisinin de farkında olmalıyız."]
 
 @app.route("/selam")
 def selam2():
-    return f'<h1>{random.choice(selam)}</h1>'
+    return f'<h1>  {random.choice(selam)}  </h1>'
 
-# Yazı tura oyunu
-@app.route("/yazi_tura/<xyz>")
+@app.route("/<xyz>")
 def secim(xyz):
     yt = ["yazı", "tura"]
     pc = random.choice(yt)
     if pc == xyz:
-        return '<h1>Bildin</h1>'
+        return '<h1>Bildin</a>'
     else:
-        return '<h1>Bilemedin</h1>'
+        return '<h1>Bilemedin</a>'
 
-# Rastgele şifre oluşturucu
-@app.route("/sifre_olusturucu")
-def sifre_olustur():
-    karakterler = string.ascii_letters + string.digits
-    sifre = ''.join(random.choice(karakterler) for _ in range(8))
-    return f'<h1>Oluşturulan Şifre: {sifre}</h1>'
+@app.route("/<x>/<y>")
+def topla(x,y):
+    return f'<h1>  {int(x)+int(y)}  </h1>'
 
-# Rastgele bir resim gösterme
-@app.route("/resim")
-def resim():
-    resimler = [
-        "https://via.placeholder.com/150/FF0000/FFFFFF?Text=Resim1",
-        "https://via.placeholder.com/150/00FF00/FFFFFF?Text=Resim2",
-        "https://via.placeholder.com/150/0000FF/FFFFFF?Text=Resim3"
-    ]
-    secilen_resim = random.choice(resimler)
-    return f'<img src="{secilen_resim}" alt="Rastgele Resim">'
 
-# İki sayıyı toplama
-@app.route("/topla/<x>/<y>")
-def topla(x, y):
-    return f'<h1>Toplam: {int(x) + int(y)}</h1>'
 
-if __name__ == "__main__":
-    app.run(debug=True)
+app.run(debug=True)
